@@ -81,7 +81,3 @@ class LoginView(View):
             return render(request, 'registration/login.html', {'login_form': login_form})
 
 
-class HomePage(View):
-    def get(self, request):
-        return render(request, 'home.html')
-
