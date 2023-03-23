@@ -7,7 +7,8 @@
 <body>
 <div class="container">
         <form method="post">{% csrf_token %}
-        Login Page
+            {{ login_form.as_p }}
+            <button type="submit">login</button>
         </form>
     </div>
 </body>

@@ -1,4 +1,5 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -57,13 +58,27 @@ class RegisterView(View):
 #         )
 #         user.set_password(password)
 #         user.save()
-#         print(password)
 #
 #         return redirect('login')
 
 class LoginView(View):
     def get(self, request):
-        return render(request, 'registration/login.html')
+        login_form = AuthenticationForm()
+        context = {
+            'login_form': login_form
+        }
+        return render(request, 'registration/login.html', context=context)
+
+    def post(self, request):
+        login_form = AuthenticationForm(data=request.POST)
+
+        if login_form.is_valid():
+            user = login_form.get_user()
+            login(request, user)
+
+            return redirect('home')
+        else:
+            return render(request, 'registration/login.html', {'login_form': login_form})
 
 
 class HomePage(View):
