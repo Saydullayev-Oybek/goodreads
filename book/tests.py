@@ -27,7 +27,6 @@ class BooksTestCase(TestCase):
         for book in books:
             self.assertEqual(book.title, 'title')
 
-
     def test_book_detail(self):
         book = Book.objects.create(title='title', description='description', isbn='124124124')
 
