@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -68,6 +69,7 @@ class LoginView(View):
         context = {
             'login_form': login_form
         }
+
         return render(request, 'registration/login.html', context=context)
 
     def post(self, request):
@@ -77,6 +79,8 @@ class LoginView(View):
             user = login_form.get_user()
             login(request, user)
 
+            messages.success(request, 'you have logged in')
+
             return redirect('home')
         else:
             return render(request, 'registration/login.html', {'login_form': login_form})
@@ -85,6 +89,9 @@ class LoginView(View):
 class LogoutView(View):
     def get(self, request):
         logout(request)
+
+        messages.info(request, 'you have logged out')
+
         return redirect('home')
 
 
