@@ -5,13 +5,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
+from users.forms import UserCreateForm, ProfileEditForm
 # Create your views here.
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView
 
-from users.forms import UserCreateForm
+
 
 
 class RegisterView(View):
@@ -100,4 +100,27 @@ class ProfileView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'registration/profile.html', {'user': request.user})
 
+
+class ProfileEditView(View):
+    def get(self, request):
+        profile_edit_form = ProfileEditForm(instance=request.user)
+        context = {
+            'profile_edit_form': profile_edit_form
+        }
+        return render(request, 'registration/profile_edit.html', context)
+
+    def post(self, request):
+        profile_edit_form = ProfileEditForm(instance=request.user, data=request.POST)
+
+        if profile_edit_form.is_valid():
+            profile_edit_form.save()
+            messages.success(request, 'you have successfully update your profile')
+
+            return redirect('profile')
+
+        else:
+            context = {
+                'profile_edit_form': profile_edit_form
+            }
+            return render(request, 'registration/profile_edit', context)
 
