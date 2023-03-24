@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -82,6 +82,15 @@ class LoginView(View):
             return render(request, 'registration/login.html', {'login_form': login_form})
 
 
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('home')
+
+
+
 class ProfileView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'registration/profile.html', {'user': request.user})
+
+

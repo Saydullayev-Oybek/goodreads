@@ -12,7 +12,11 @@
 <body>
 
     <div>
-        <h2><a href="{% url 'login' %}">login</a></h2> /
+        {% if user.is_authenticated %}
+                <h2><a href="{% url 'logout' %}">logout</a></h2>
+        {% else %}
+            <h2><a href="{% url 'login' %}">login</a></h2> /
+        {% endif %}
         <h2><a href="{% url 'register' %}">register</a></h2>
         <h1><a href="{% url 'books_list' %}">books</a></h1>
         <h1><a href="{% url 'profile' %}">profile</a></h1>
