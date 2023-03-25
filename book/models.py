@@ -7,6 +7,7 @@ from django.db import models
 class Book(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    image = models.ImageField(upload_to='book_pictures', default='default_pic.png')
     isbn = models.CharField(max_length=17)
 
     def __str__(self):
