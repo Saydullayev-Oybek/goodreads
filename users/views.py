@@ -81,7 +81,7 @@ class LoginView(View):
 
             messages.success(request, 'you have logged in')
 
-            return redirect('home')
+            return redirect('books_list')
         else:
             return render(request, 'registration/login.html', {'login_form': login_form})
 
@@ -92,7 +92,7 @@ class LogoutView(View):
 
         messages.info(request, 'you have logged out')
 
-        return redirect('home')
+        return redirect('books_list')
 
 
 

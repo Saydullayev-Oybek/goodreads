@@ -5,6 +5,10 @@
 }
 
 .book_profile_pic{
-    width: 220px;
-    height: 200px;
+    width: 250px;
+    height: 300px;
+}
+
+.book_list{
+    margin-left: 30px;
 }

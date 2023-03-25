@@ -4,12 +4,17 @@
 
     <div class="container">
         {% if books %}
-            <h1>Books</h1>
-            {% for book in books %}
-                <ul>
-                    <li><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></li>
-                </ul>
-            {% endfor %}
+         {% for book in books %}
+            <div class="row book_list">
+                <div class="col-3">
+                    <img class="book_profile_pic" src="{{ book.image.url }}">
+                </div>
+                <div class="col-6">
+                    <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a>
+                    <p>{{ book.description | slice:':80' }} ...</p>
+                </div><hr>
+            </div>
+        {% endfor %}
         {% else %}
             No books found.
         {% endif %}

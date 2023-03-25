@@ -2,13 +2,42 @@
 
 {% block content %}
     <div class="container">
-        <h1>User info</h1>
-        <img class="profile_pic" src="{{ user.image.url }}" alt="profile picture">
-        <p>User name {{ user.username }}</p>
-        <p>First name {{ user.first_name }}</p>
-        <p>Last name {{ user.last_name }}</p>
-        <p>Email {{ user.email }}</p>
+        <div class="row d-flex justify-content-center">
 
-        <a href="{% url 'profile-edit' %}">Edit</a>
+        <div class="col-md-7">
+
+            <div class="card p-3 py-4">
+
+                <div class="text-center">
+                        <img class="profile_pic" src="{{ user.image.url }}" alt="profile picture">
+                </div>
+
+                <div class="text-center mt-4">
+                    <a class="text-decoration-none" href="{% url 'profile-edit' %}"><span class="bg-secondary p-1 px-4 rounded text-white ">Edit</span></a>
+                    <h5 class="mt-2 mb-0">@{{ user.username }}</h5>
+                    <span>{{ user.last_name }}</span>
+                    <span>{{ user.first_name }}</span>
+
+                    <div class="buttons mt-3">
+                        <button class="btn btn-outline-primary px-4">Message</button>
+                        <button class="btn btn-primary px-4 ms-3">Contact</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+<!--        <h1>User info</h1>-->
+<!--        <img class="profile_pic" src="{{ user.image.url }}" alt="profile picture">-->
+<!--        <p>User name {{ user.username }}</p>-->
+<!--        <p>First name {{ user.first_name }}</p>-->
+<!--        <p>Last name {{ user.last_name }}</p>-->
+<!--        <p>Email {{ user.email }}</p>-->
+
+<!--        <a href="{% url 'profile-edit' %}">Edit</a>-->
     </div>
 {% endblock content %}

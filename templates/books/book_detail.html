@@ -3,9 +3,15 @@
 {% block content %}
 
      <div class="container">
-          <h1>{{ book.title }}</h1>
-          <img class="book_profile_pic" src="{{ book.image.url }}" alt="book picture">
-          <p>{{ book.description }}</p>
+          <div class="row">
+               <div class="col-3">
+                  <img class="book_profile_pic" src="{{ book.image.url }}" alt="book picture">
+               </div>
+               <div class="col-6">
+                    <h3>{{ book.title }}</h3>
+                    <p>{{ book.description }}</p>
+               </div>
+          </div>
      </div>
 
 {% endblock content %}
