@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user
-from django.contrib.auth.models import User
+from .models import CustomUser
 from django.test import TestCase
 
 # Create your tests here.
@@ -8,7 +8,7 @@ from django.urls import reverse
 
 class RegisterTestCase(TestCase):
     def test_unique_username(self):
-        user=User.objects.create(
+        user=CustomUser.objects.create(
             username='oybek',
             first_name='Oybek',
             last_name='Saydullayev',
@@ -28,7 +28,7 @@ class RegisterTestCase(TestCase):
                 'password': 'oybek01e21',
             }
         )
-        user_count = User.objects.count()
+        user_count = CustomUser.objects.count()
         self.assertEqual(user_count, 1)
 
         self.assertFormError(response2, 'user_form', 'username', 'A user with that username already exists.')
@@ -44,7 +44,7 @@ class RegisterTestCase(TestCase):
             'password': 'oybek0121'
                }
         )
-        count = User.objects.count()
+        count = CustomUser.objects.count()
         self.assertEqual(count, 0)
 
     def test_valid_username(self):
@@ -57,13 +57,13 @@ class RegisterTestCase(TestCase):
                 'password': 'oybek0121'
             }
         )
-        user_count = User.objects.count()
+        user_count = CustomUser.objects.count()
         self.assertEqual(user_count, 0)
 
 
 class LoginTestCase(TestCase):
     def setUp(self):
-        self.db_user = User.objects.create(
+        self.db_user = CustomUser.objects.create(
             username='oybek',
             first_name='Oybek',
             last_name='saydullayev',
@@ -123,7 +123,7 @@ class ProfileTestCase(TestCase):
         self.assertEqual(response.url, reverse('login') + '?next=/users/profile/')
 
     def test_profile_detail(self):
-        user = User.objects.create(
+        user = CustomUser.objects.create(
             username='oybek',
             first_name='Oybek',
             last_name='Saydullayev',
@@ -143,7 +143,7 @@ class ProfileTestCase(TestCase):
         self.assertContains(response, user.email)
 
     def test_profile_update(self):
-        user = User.objects.create(
+        user = CustomUser.objects.create(
             username='oybek',
             first_name='Oybek',
             last_name='Saydullayev',
@@ -164,7 +164,7 @@ class ProfileTestCase(TestCase):
             }
         )
 
-        user = User.objects.get(pk=user.pk)
+        user = CustomUser.objects.get(pk=user.pk)
 
         self.assertTrue(user.is_authenticated)
         self.assertEqual(user.username, 'oybekjohn')

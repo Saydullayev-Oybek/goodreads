@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
+from .models import CustomUser
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from users.forms import UserCreateForm, ProfileEditForm
@@ -52,7 +52,7 @@ class RegisterView(View):
 #         password = request.POST['password']
 #         email = request.POST['email']
 #
-#         user = User.objects.create(
+#         user = CustomUser.objects.create(
 #             username=username,
 #             first_name=first_name,
 #             last_name=last_name,
