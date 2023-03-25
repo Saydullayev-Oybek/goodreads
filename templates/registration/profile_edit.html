@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
 <div class="container">
-    <h1>Edit Profile</h1>
-
-    <form method="post" enctype="multipart/form-data"> {% csrf_token %}
-        {{ profile_edit_form.as_p }}
-        <button class="btn btn-outline-success" type="submit">saqlash</button>
-    </form>
+    <div class="row">
+        <div class="col-6">
+            <h3>Edit Profile</h3>
+            <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+                {{ profile_edit_form | crispy }}
+                <button class="btn btn-primary" type="submit">saqlash</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}
