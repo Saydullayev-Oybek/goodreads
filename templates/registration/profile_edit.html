@@ -5,7 +5,7 @@
 <div class="container">
     <h1>Edit Profile</h1>
 
-    <form method="post"> {% csrf_token %}
+    <form method="post" enctype="multipart/form-data"> {% csrf_token %}
         {{ profile_edit_form.as_p }}
         <button type="submit">saqlash</button>
     </form>

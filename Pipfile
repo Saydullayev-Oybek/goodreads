@@ -7,6 +7,7 @@ name = "pypi"
 django = "*"
 psycopg2 = "*"
 form = "*"
+pillow = "*"
 
 [dev-packages]
 

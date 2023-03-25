@@ -3,6 +3,7 @@
 {% block content %}
     <div class="container">
         <h1>CustomUser info</h1>
+        <img class="profile_pic" src="{{ user.image.url }}" alt="profile picture">
         <p>CustomUser name {{ user.username }}</p>
         <p>First name {{ user.first_name }}</p>
         <p>Last name {{ user.last_name }}</p>

@@ -110,7 +110,11 @@ class ProfileEditView(View):
         return render(request, 'registration/profile_edit.html', context)
 
     def post(self, request):
-        profile_edit_form = ProfileEditForm(instance=request.user, data=request.POST)
+        profile_edit_form = ProfileEditForm(
+            instance=request.user,
+            data=request.POST,
+            files=request.FILES,
+        )
 
         if profile_edit_form.is_valid():
             profile_edit_form.save()
