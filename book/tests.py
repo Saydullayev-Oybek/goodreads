@@ -48,5 +48,31 @@ class BookPaginatorCase(TestCase):
         self.assertContains(response, book3.title)
 
 
+class BookSearchCase(TestCase):
+    def test_search_book(self):
+        book1 = Book.objects.create(title='title1', description='description1', isbn='234234324')
+        book2 = Book.objects.create(title='title2', description='description2', isbn='234234325')
+        book3 = Book.objects.create(title='title3', description='description23', isbn='2342343253')
+
+        response = self.client.get(reverse('books_list') + '?q=title1')
+
+        self.assertContains(response, book1.title)
+        self.assertNotContains(response, book2.title)
+        self.assertNotContains(response, book3.title)
+
+
+        response = self.client.get(reverse('books_list') + '?q=title2')
+
+        self.assertContains(response, book2.title)
+        self.assertNotContains(response, book1.title)
+        self.assertNotContains(response, book3.title)
+
+
+        response = self.client.get(reverse('books_list') + '?q=title3')
+
+        self.assertContains(response, book3.title)
+        self.assertNotContains(response, book1.title)
+        self.assertNotContains(response, book2.title)
+
 
 
