@@ -3,18 +3,46 @@
 {% block content %}
 
     <div class="container">
-        {% if books %}
-         {% for book in books %}
+        {% if page_obj %}
             <div class="row book_list">
-                <div class="col-3">
-                    <img class="book_profile_pic" src="{{ book.image.url }}">
-                </div>
-                <div class="col-6">
-                    <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a>
-                    <p>{{ book.description | slice:':80' }} ...</p>
-                </div><hr>
+                {% for book in page_obj.object_list %}
+                        <div class="col-4">
+                            <img class="book_profile_pic" src="{{ book.image.url }}">
+                        </div>
+                        <div class="col-6" class="book_list__body">
+                            <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a>
+                            <p>{{ book.description | slice:':80' }} ...</p>
+                        </div><hr>
+                 {% endfor %}
             </div>
-        {% endfor %}
+
+
+            <nav aria-label="...">
+                  <ul class="pagination">
+                        <li class="page-item">
+                            {% if page_obj.has_previous %}
+                                <a class="page-link" href="{% url 'books_list' %}?page={{page_obj.previous_page_number}}">previous</a>
+                            {% endif %}
+                        </li>
+
+                        <li class="page-item">
+                                <a class="page-link" href="{% url 'books_list' %}?page=1">first page</a>
+                        </li>
+                        <li class="page-item active" aria-current="page">
+                          <a class="page-link" href="{% url 'books_list' %}?page={{page_obj.number}}">{{page_obj.number}}</a>
+                        </li>
+                         <li class="page-item">
+                                <a class="page-link" href="{% url 'books_list' %}?page={{page_obj.paginator.num_pages}}">last page</a>
+                         </li>
+
+                        <li class="page-item">
+                            {% if page_obj.has_next %}
+                                <a class="page-link" href="{% url 'books_list'%}?page={{page_obj.next_page_number}} ">next</a>
+                            {% endif %}
+                        </li>
+                  </ul>
+            </nav>
+
         {% else %}
             No books found.
         {% endif %}

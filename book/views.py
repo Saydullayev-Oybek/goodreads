@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
@@ -5,19 +6,25 @@ from .models import Book
 from django.views import View
 
 
-class BooksListView(ListView):
-    model = Book
-    template_name = 'books/books_list.html'
-    queryset = Book.objects.all()
-    context_object_name = 'books'
+# class BooksListView(ListView):
+#     model = Book
+#     template_name = 'books/books_list.html'
+#     queryset = Book.objects.all()
+#     context_object_name = 'books'
 
-# class BooksListView(View):
-#     def get(self, request):
-#         books = Book.objects.all()
-#         context = {
-#             'books': books
-#         }
-#         return render(request, 'books/books_list.html', context)
+class BooksListView(View):
+    def get(self, request):
+        books = Book.objects.all().order_by('id')
+
+        paginator = Paginator(books, 2)
+        page_num = request.GET.get('page', 1)
+
+        page_obj = paginator.get_page(page_num)
+
+        context = {
+            'page_obj': page_obj
+        }
+        return render(request, 'books/books_list.html', context)
 
 
 class BookDetailView(DetailView):
@@ -33,3 +40,4 @@ class BookDetailView(DetailView):
 #             'book': book
 #         }
 #         return render(request, 'books/book_detail.html', context)
+

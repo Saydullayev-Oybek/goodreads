@@ -10,15 +10,17 @@ class BooksTestCase(TestCase):
         self.assertContains(response, 'No books found.')
 
     def test_list_book(self):
-        Book.objects.create(title='title1', description='description1', isbn='12342412')
-        Book.objects.create(title='title2', description='description2', isbn='12342414')
-        Book.objects.create(title='title3', description='description3', isbn='12342416')
+        book1 = Book.objects.create(title='title1', description='description1', isbn='12342412')
+        book2 = Book.objects.create(title='title2', description='description2', isbn='12342414')
+        book3 = Book.objects.create(title='title3', description='description3', isbn='12342416')
 
         response = self.client.get(reverse('books_list'))
 
-        books = Book.objects.all()
-        for book in books:
+        for book in [book1, book2]:
             self.assertContains(response, book.title)
+
+        response1 = self.client.get(reverse('books_list') + '?page=2')
+        self.assertContains(response1, book3.title)
 
     def test_book_attributes(self):
         Book.objects.create(title='title', description='description', isbn='123245')
@@ -34,4 +36,17 @@ class BooksTestCase(TestCase):
 
         self.assertContains(response, book.title)
         self.assertContains(response, book.description)
+
+
+class BookPaginatorCase(TestCase):
+    def test_has_next_page(self):
+        book1 = Book.objects.create(title='title1', description='description1', isbn='234234324')
+        book2 = Book.objects.create(title='title2', description='description2', isbn='234234325')
+        book3 = Book.objects.create(title='title23', description='description23', isbn='2342343253')
+
+        response = self.client.get(reverse('books_list') + '?page=2')
+        self.assertContains(response, book3.title)
+
+
+
 
