@@ -3,7 +3,7 @@
 {% block content %}
 
      <div class="container">
-          <div class="row">
+          <div class="row mb-3">
                <div class="col-4">
                   <img class="book_profile_pic" src="{{ book.image.url }}" alt="book picture">
                </div>
@@ -12,6 +12,19 @@
                     <p>{{ book.description }}</p>
                </div>
           </div>
+
+          <h3>Reviews</h3><hr>
+         {% for comment in comments %}
+          <div class="row mb-3">
+                    <div class="col-1">
+                         <img class="profile_pic" style="width:100px; height:100px; border-radius:50%" src="{{ comment.user.image.url }}" alt="user picture">
+                    </div>
+                    <div class="col-5 ms-5">
+                        <b>@{{ comment.user.username }}</b> rate it {{ comment.stars_given }}, <span class="fw-lighter">{{ comment.created_time }}</span>
+                         <p class="font-monospace">{{comment.comment}}</p>
+                    </div>
+          </div>
+         {% endfor %}
      </div>
 
 {% endblock content %}

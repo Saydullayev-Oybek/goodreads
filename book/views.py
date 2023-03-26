@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
-from .models import Book
+from .models import Book, BookReview
 from django.views import View
 
 
@@ -32,17 +32,21 @@ class BooksListView(View):
         return render(request, 'books/books_list.html', context)
 
 
-class BookDetailView(DetailView):
-    model = Book
-    template_name = 'books/book_detail.html'
-    pk_url_kwarg = 'id'
+# class BookDetailView(DetailView):
+#     model = Book
+#     template_name = 'books/book_detail.html'
+#     pk_url_kwarg = 'id'
 
 
-# class BookDetailView(View):
-#     def get(self, request, id):
-#         book = Book.objects.get(id=id)
-#         context = {
-#             'book': book
-#         }
-#         return render(request, 'books/book_detail.html', context)
+class BookDetailView(View):
+    def get(self, request, id):
+        book = Book.objects.get(id=id)
+
+        comments = BookReview.objects.filter(book=book)
+
+        context = {
+            'book': book,
+            'comments': comments
+        }
+        return render(request, 'books/book_detail.html', context)
 

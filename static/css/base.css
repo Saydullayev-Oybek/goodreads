@@ -1,15 +1,13 @@
 .profile_pic{
-    width: 220px;
-    height: 200px;
+    width: 200px;
+    height: 2500px;
     border-radius: 20%;
 }
+
 
 .book_profile_pic{
     width: 250px;
     height: 300px;
 }
 
-.book_list{
-    display: flex;
-}
 
