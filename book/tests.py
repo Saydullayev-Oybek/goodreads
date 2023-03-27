@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
-from .models import Book
+
+from users.models import CustomUser
+from .models import Book, BookReview
 
 
 class BooksTestCase(TestCase):
@@ -73,6 +75,35 @@ class BookSearchCase(TestCase):
         self.assertContains(response, book3.title)
         self.assertNotContains(response, book1.title)
         self.assertNotContains(response, book2.title)
+
+
+class BookReviewCase(TestCase):
+    def test_add_book_review(self):
+        book = Book.objects.create(title='title1', description='description1', isbn='234234324')
+        user = CustomUser.objects.create(
+            username='oybek',
+            first_name='Oybek',
+            last_name='saydullayev',
+            email='oybek@gmail.com'
+        )
+        user.set_password('password')
+        user.save()
+
+        self.client.login(username='oybek', password='password')
+
+        self.client.post(reverse('review', kwargs={'id': book.id}), data={
+                'stars_given': 4,
+                'comment': 'this is comment'
+            }
+        )
+
+        book_reviews = BookReview.objects.filter(book=book)
+
+        self.assertEqual(book_reviews.count(), 1)
+        self.assertEqual(book_reviews[0].comment, 'this is comment')
+        self.assertEqual(book_reviews[0].stars_given, 4)
+        self.assertEqual(book_reviews[0].user, user)
+        self.assertEqual(book_reviews[0].book, book)
 
 
 
