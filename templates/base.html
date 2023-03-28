@@ -7,9 +7,9 @@
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="{% static 'css/base.css' %}" rel="stylesheet" type="text/css">
+    <title>{% block title %} Goodreads {% endblock title %}</title>
 </head>
 <body>
-
 
 <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark mb-3">
   <div class="container-fluid container">
@@ -17,11 +17,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-<!--          <a class="nav-link active" aria-current="page" href="{% url 'books_list' %}">Home</a>-->
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{% url 'books_list' %}">Books</a>
         </li>
+          <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'home' %}">book reviews</a>
+          </li>
       </ul>
 
       <div>
