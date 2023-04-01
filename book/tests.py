@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from users.models import CustomUser
-from .models import Book, BookReview
+from .models import Book, BookReview, BookAuthor
 
 
 class BooksTestCase(TestCase):
@@ -104,6 +104,21 @@ class BookReviewCase(TestCase):
         self.assertEqual(book_reviews[0].stars_given, 4)
         self.assertEqual(book_reviews[0].user, user)
         self.assertEqual(book_reviews[0].book, book)
+
+
+    # def test_book_author(self):
+    #     user = CustomUser.objects.create(first_name='oybek', last_name='saydullyev', email='oybek@gmail.com')
+    #     user.set_password('password')
+    #     user.save()
+    #
+    #     book = Book.objects.create(title='first day', description='description', isbn='1231231')
+    #
+    #     book_info = BookAuthor.objects.create(book=book, author=user)
+    #     book_author = BookAuthor.objects.filter(book=book)
+    #
+    #     response = self.client.get(reverse('book_detail', kwargs={'id': book.id}))
+    #
+    #     self.assertContains(response, book_author.author.title)
 
 
 

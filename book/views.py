@@ -1,18 +1,12 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Book, BookReview
 from django.views import View
 from .forms import BookReviewForm
 
-
-# class BooksListView(ListView):
-#     model = Book
-#     template_name = 'books/books_list.html'
-#     queryset = Book.objects.all()
-#     context_object_name = 'books'
 
 class BooksListView(View):
     def get(self, request):
@@ -34,12 +28,6 @@ class BooksListView(View):
         return render(request, 'books/books_list.html', context)
 
 
-# class BookDetailView(DetailView):
-#     model = Book
-#     template_name = 'books/book_detail.html'
-#     pk_url_kwarg = 'id'
-
-
 class BookDetailView(View):
     def get(self, request, id):
         book = Book.objects.get(id=id)
@@ -57,7 +45,7 @@ class BookDetailView(View):
 
 
 
-class BookReviewView(View):
+class BookReviewView(LoginRequiredMixin, View):
     def post(self, request, id):
         book_review_form = BookReviewForm(data=request.POST)
         book = Book.objects.get(id=id)
