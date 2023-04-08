@@ -6,7 +6,6 @@ from .models import CustomUser
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from users.forms import UserCreateForm, ProfileEditForm
-# Create your views here.
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView

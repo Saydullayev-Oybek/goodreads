@@ -23,6 +23,8 @@ urlpatterns = [
     path('', include('book.urls')),
     path('users/', include('users.urls')),
     path('pages/', include('pages.urls')),
+    path('api/', include('api.urls')),
+    path('api-auth', include('rest_framework.urls'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

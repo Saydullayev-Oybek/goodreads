@@ -18,13 +18,13 @@ class UserCreateForm(forms.ModelForm):
         )
         user.save()
 
-        if user.email:
-            send_mail(
-                'welcome to goodreads clone',
-                f"hi, {user.username}, Welcome to goodreads clone",
-                'oybekjohn01@gmail.com',
-                [user.email]
-            )
+        # if user.email:
+        #     send_mail(
+        #         'welcome to goodreads clone',
+        #         f"hi, {user.username}, Welcome to goodreads clone",
+        #         'oybekjohn01@gmail.com',
+        #         [user.email]
+        #     )
 
         return user
 
