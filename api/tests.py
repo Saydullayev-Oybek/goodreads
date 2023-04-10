@@ -23,7 +23,7 @@ class BookReviewAPICase(APITestCase):
 
         comment = BookReview.objects.create(user=self.user, book=book, stars_given=4, comment='this is comment')
 
-        response = self.client.get(reverse('review_detail', kwargs={'id': comment.id}))
+        response = self.client.get(reverse('review-detail', kwargs={'id': comment.id}))
 
         self.assertEqual(comment.comment, 'this is comment')
         self.assertEqual(comment.stars_given, 4)
@@ -40,7 +40,7 @@ class BookReviewAPICase(APITestCase):
         comment = BookReview.objects.create(user=self.user, book=book, stars_given=5, comment='this is good comment')
         comment2 = BookReview.objects.create(user=user2, book=book, stars_given=3, comment='this is bad comment')
 
-        response = self.client.get(reverse('reviews'))
+        response = self.client.get(reverse('review-list'))
 
         self.assertEqual(len(response.data['results']), 2)
         self.assertEqual(response.data['results'][0]['stars_given'], comment2.stars_given)
@@ -55,7 +55,7 @@ class BookReviewAPICase(APITestCase):
     def test_create_book_review(self):
         book = Book.objects.create(title='book1', description='description1', isbn='234324')
 
-        response = self.client.post(reverse('reviews'), data={
+        response = self.client.post(reverse('review-list'), data={
             'stars_given': 4,
             'comment': 'comment',
             'user_id': self.user.id,
@@ -70,7 +70,7 @@ class BookReviewAPICase(APITestCase):
         book = Book.objects.create(title='book1', description='description1', isbn='234324')
         book_review = BookReview.objects.create(stars_given=4, comment='good', book=book, user=self.user)
 
-        response = self.client.delete(reverse('review_detail', kwargs={'id': book_review.id}))
+        response = self.client.delete(reverse('review-detail', kwargs={'id': book_review.id}))
 
         self.assertEqual(response.status_code, 204)
 
@@ -78,7 +78,7 @@ class BookReviewAPICase(APITestCase):
         book = Book.objects.create(title='book1', description='description1', isbn='234324')
         book_review = BookReview.objects.create(stars_given=4, comment='good', book=book, user=self.user)
 
-        response = self.client.patch(reverse('review_detail', kwargs={'id': book_review.id}), data={
+        response = self.client.patch(reverse('review-detail', kwargs={'id': book_review.id}), data={
             'stars_given': 5,
             'comment': 'bad'
         })
@@ -92,7 +92,7 @@ class BookReviewAPICase(APITestCase):
         book = Book.objects.create(title='book1', description='description1', isbn='234324')
         book_review = BookReview.objects.create(stars_given=4, comment='good', book=book, user=self.user)
 
-        response = self.client.put(reverse('review_detail', kwargs={'id': book_review.id}), data={
+        response = self.client.put(reverse('review-detail', kwargs={'id': book_review.id}), data={
             'user_id': self.user.id,
             'book_id': book.id,
             'stars_given': 3,
@@ -105,7 +105,7 @@ class BookReviewAPICase(APITestCase):
         self.assertEqual(book_review.comment, 'this is bad comment')
 
 
-        response = self.client.put(reverse('review_detail', kwargs={'id': book_review.id}), data={
+        response = self.client.put(reverse('review-detail', kwargs={'id': book_review.id}), data={
             'book_id': book.id,
             'stars_given': 3,
             'comment': 'this is bad comment'
