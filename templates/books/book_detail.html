@@ -13,9 +13,9 @@
                    <b>Author by</b>
                    {% for book_author in book.bookauthor_set.all %}
                         {% if forloop.last %}
-                            <span class="fst-italic">{{ book_author.author.full_name }} </span>
+                            <span class="fst-italic"><a href="{% url 'book_author' book_author.id %}">{{ book_author.author.full_name }}</a> </span>
                         {% else %}
-                            <span class="fst-italic">{{ book_author.author.full_name }},</span>
+                            <span class="fst-italic"><a href="{% url 'book_author' book_author.id %}">{{ book_author.author.full_name }}</a>,</span>
                         {% endif %}
                    {% endfor %}
                     <p>{{ book.description }}</p>

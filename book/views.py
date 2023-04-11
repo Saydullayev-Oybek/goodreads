@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Book, BookReview
+from .models import Book, BookReview, Author
 from django.views import View
 from .forms import BookReviewForm
 
@@ -44,6 +44,15 @@ class BookDetailView(View):
         }
         return render(request, 'books/book_detail.html', context)
 
+
+class BookAuthorView(View):
+    def get(self, request, author_id):
+        book_author = Author.objects.get(id=author_id)
+        context = {
+            'book_author': book_author
+        }
+
+        return render(request, 'books/book_author.html', context=context)
 
 
 class BookReviewView(LoginRequiredMixin, View):
